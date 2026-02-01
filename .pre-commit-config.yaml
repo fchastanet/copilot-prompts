@@ -128,10 +128,10 @@ repos:
           )
 
   - repo: https://github.com/fchastanet/ai-linter
-    rev: 0.3.2
+    rev: 0.3.3
     hooks:
       - id: ai-linter-workspace
-        args: [--skills, --max-warnings, '5']
+        args: [--skills]
 
   - repo: local
     hooks:
