@@ -1,0 +1,109 @@
+---
+# AI Linter Configuration File
+
+# Logging configuration
+# Level options: DEBUG, INFO, WARNING, ERROR
+log_level: INFO
+
+# Logging output format
+# Options: file-digest (default), logfmt, yaml
+# - file-digest: Human-readable format grouped by file
+# - logfmt: Key=value pairs on each line (original format)
+# - yaml: Structured YAML output (machine-readable)
+log_format: file-digest
+
+# Maximum warnings before the linter fails
+# Set to a number, or use -1 for unlimited warnings
+max_warnings: 10
+
+# Directories to ignore during validation
+# These patterns will be ignored when scanning for AGENTS.md files
+ignore_dirs:
+  - ".git"
+  - "__pycache__"
+  - "node_modules"
+  - "build"
+  - "dist"
+  - ".vscode"
+  - ".pytest_cache"
+  - "venv"
+  - "env"
+  - ".history"
+  - "doc"
+
+# Code snippet validation
+# Maximum number of lines allowed in a code snippet before warning
+# Helps prevent bloated AI context by encouraging externalization of large code blocks
+code_snippet_max_lines: 3
+
+# Prompt and agent directories to validate
+# These directories will be checked for token count, references, skills, and tools
+prompt_dirs:
+  - ".github/prompts"
+
+agent_dirs:
+  - ".github/agents"
+
+# Resource directories to check for unreferenced files
+# All files in these directories should be referenced somewhere in markdown files
+resource_dirs:
+  - "references"
+  - "assets"
+  - "scripts"
+
+# Log level for unreferenced files in resource directories
+# Options: ERROR, WARNING, INFO
+unreferenced_file_level: ERROR
+
+# Log level for missing AGENTS.md file in project root
+# Options: ERROR, WARNING, INFO
+missing_agents_file_level: WARNING
+
+# Content length report configuration
+# Warning threshold (0.0-1.0) for content length (default: 0.8 = 80%)
+# Files that reach this percentage of the limit will show a warning in the report
+report_warning_threshold: 0.8
+
+# Maximum token count for prompts in .github/prompts directories
+prompt_max_tokens: 5000
+
+# Maximum line count for prompts in .github/prompts directories
+prompt_max_lines: 500
+
+# Maximum token count for agents in .github/agents directories
+agent_max_tokens: 5000
+
+# Maximum line count for agents in .github/agents directories
+agent_max_lines: 500
+
+# Enable or disable mandatory section checks (missing mandatory sections
+# will trigger warnings or errors based on mandatory_sections_log_level)
+enable_mandatory_sections: true
+
+# Log level for missing mandatory sections in AGENTS.md
+# Options: ERROR, WARNING
+mandatory_sections_log_level: WARNING
+
+# List of mandatory sections that must be present in AGENTS.md files
+# These sections help ensure agents have proper documentation (if enable_mandatory_sections is true)
+mandatory_sections:
+  - Overview                   # Brief summary of the agent’s purpose and scope.
+  - "Limitations"              # Known limitations or boundaries of the agent.
+  - "Navigating the Codebase"
+  - "Build & Commands"
+  - "Code Style"
+  - "Testing"
+  - "Security"
+  - "Configuration"
+
+# Agent section validation configuration
+# Enable or disable advised section checks
+enable_advised_sections: true
+
+# List of advised sections for AGENTS.md files
+# Missing these will trigger advice-level messages (if enable_advised_sections is true)
+advised_sections:
+  - "Architecture"
+  - "Build Process"
+  - "Git Commit Conventions"
+  - "Troubleshooting"          # Common issues and how to resolve them.

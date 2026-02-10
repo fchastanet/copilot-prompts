@@ -2,26 +2,14 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Lint Skills, Agents & prompts",
+      "label": "AI Linter: Validate Skills",
       "type": "shell",
-      "group": {
-        "kind": "test",
-        "isDefault": false
-      },
       "command": "ai-linter",
-      "args": [".", "--skills"],
-      "presentation": {
-        "revealProblems": "onProblem",
-        "echo": false,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": true
-      },
+      "args": ["--skills", ".", "--log-format", "logfmt"],
+      "group": "test",
       "problemMatcher": {
         "owner": "ai-linter",
-        "fileLocation": "absolute",
+        "fileLocation": "relative",
         "pattern": {
           "regexp": "^level=\"(WARNING|ERROR)\"\\s+rule=\"([^\"]+)\"\\s+path=\"([^\"]+)\"(?:\\s+line=\"(\\d+)\")?\\s+message=\"([^\"]+)\"",
           "file": 3,
@@ -30,6 +18,6 @@
           "message": 5
         }
       }
-    }
+    },
   ]
 }
