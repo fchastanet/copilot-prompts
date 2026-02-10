@@ -1,4 +1,5 @@
 ---
+model: claude-haiku-4-5
 mode: ask
 description: Allows to generate a commit message based on current chat window. Requires the Joyride extension.
 ---

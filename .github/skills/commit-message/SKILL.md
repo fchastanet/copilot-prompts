@@ -44,62 +44,6 @@ Use `git diff` output to understand the changes made.
 ## 4. Formatting Example
 
 Follow the formatting, emoji usage, and scope tagging shown in the example below:
-
-```markdown
-✨🔧(patient): Patient Management Service Refactor (Domain Layer)
-
-Refactor patient management logic in the domain and application layers for improved testability and maintainability.
-Update related tests and documentation.
-
-## 5. ✨ Patient Management Feature (Phase 1)
-- Implement patient CRUD operations in domain/application layers
-- Refactor PatientService using dependency injection (custom DI container)
-- Update patient model and validation logic
-
-## 6. 🔧 Packages/Layers Affected
-- Migrate all core services and commands to dependency injection using custom DI container.
-## 7. 🛠️ Github workflow
-- Implement CI/CD pipeline for automated testing and deployment
-- Configure linting and formatting checks
-- Set up issue templates and pull request templates
-
-## 8. 🖥️ UI
-- Update patient form to use new validation logic
-
-## 9. 🔧 Drag and Drop Refactoring
-- Refactor drag-and-drop logic to use new service structure
-
-## 10. 🛡️ Refactoring
-- Refactor data access layer to use repository pattern
-
-## 11. 🐛 Bug Fixes & Technical Debt Reduction
-- Fix patient data serialization issue
-
-## 12. 📊 Metrics & Results
-- Add logging for patient operations
-
-## 13. 🚀 Benefits
-- Improve code maintainability and testability
-
-## 14. 📄 Documentation
-- Update patient management section in docs/ai/2025-09-14-PATIENT_MANAGEMENT.md
-
-## 15. 🛡️ Compliance
-- Ensure patient data encryption (HIPAA compliance)
-
-## 16. 💥 Breaking Changes
-- Remove deprecated patient endpoints; update API consumers
-
-## 17. 🧪 Tests
-- Add unit tests for PatientService
-- Update integration tests for patient endpoints
-
-## 18. 📚 Related Docs
-- See design spec in docs/specs/patient-management.md
-
-## 19. ✅ Reviewer Checklist
-- [ ] Migration steps documented
-- [ ] New patterns reviewed
-```
+![Example Commit Message](references/example-commit-msg.md)
 
 Do not include any explanations or additional text.
