@@ -7,13 +7,17 @@ items:
     kind: instruction
   - path: .github/prompts/boost-prompt.prompt.md
     kind: prompt
-  - path: .github/prompts/generate-commit-msg.prompt.md
+  - path: .github/prompts/gpt-generate-commit-msg.prompt.md
+    kind: prompt
+  - path: .github/prompts/claude-generate-commit-msg.prompt.md
     kind: prompt
   - path: .github/prompts/smart.prompt.md
     kind: prompt
   - path: .github/agents/refactor-class.prompt.md
     kind: agent
   - path: skills/commit-message/SKILL.md
+    kind: skill
+  - path: skills/copy-clipboard/SKILL.md
     kind: skill
   - path: skills/human-interaction/SKILL.md
     kind: skill
