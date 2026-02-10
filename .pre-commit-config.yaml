@@ -135,10 +135,15 @@ repos:
 
   - repo: local
     hooks:
-      - id: sync-commit-instructions
-        name: Sync commit message instructions
-        entry: .github/scripts/sync-commit-instructions.sh
+      - id: sync-templates
+        name: Sync templates
+        entry: .github/scripts/sync-templates.sh
         language: script
         stages: [pre-commit, pre-push]
         pass_filenames: false
-        files: ^\.github/skills/commit-message/SKILL\.md$
+        files: |
+          (?x)(
+             ^\.github/skills/commit-message/SKILL\.md$|
+             ^\.github/skills/commit-message/references/example-commit-msg\.md$|
+             ^\.github/prompts/gpt-generate-commit-msg\.prompt\.md$
+          )
