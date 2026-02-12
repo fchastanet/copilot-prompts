@@ -365,8 +365,11 @@ This repository follows detailed commit message conventions defined in `.github/
 **Issue**: AI linter reports unreferenced files
 
 **Solution**:
+
 - Ensure files in `references/` are linked from main content
-- Use markdown image syntax: `![Description](path/to/file.md)`
+- Use markdown image syntax as a special marker: `![Description](path/to/file.md)`
+  - Note: This is a custom convention in this repo. The sync-templates.sh script replaces these markers with actual file
+    content
 - Check relative paths are correct
 - Update `.ai-linter-config.yaml` if intentional
 
