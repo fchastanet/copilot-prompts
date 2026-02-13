@@ -3,7 +3,7 @@ name: Fchastanet Copilot Typescript
 description: "Meta prompts that help you discover and generate curated GitHub Copilot chat modes, collections, instructions, prompts, and agents focused on TypeScript development."
 tags: [github-copilot, discovery, meta, prompt-engineering, agents, react, typescript]
 items:
-  - path: .github/commit-message.instructions.md
+  - path: instructions/commit-message.instructions.md
     kind: instruction
   - path: prompts/boost-prompt.prompt.md
     kind: prompt

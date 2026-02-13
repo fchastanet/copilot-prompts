@@ -70,7 +70,7 @@ repos:
         exclude: |
           (?x)(
             ^prompts/|
-            ^\.github/commit-message.instructions.md$|
+            ^instructions/commit-message.instructions.md$|
             AGENTS\.md|
             SKILL\.md
           )
@@ -85,7 +85,7 @@ repos:
         exclude: |
           (?x)(
             ^prompts/|
-            ^\.github/commit-message.instructions.md$|
+            ^instructions/commit-message.instructions.md$|
             ^doc/ai/|
             AGENTS\.md|
             SKILL\.md
@@ -110,7 +110,7 @@ repos:
         exclude: |
           (?x)(
             ^prompts/|
-            ^\.github/commit-message.instructions.md$|
+            ^instructions/commit-message.instructions.md$|
             ^doc/ai/
           )
 
