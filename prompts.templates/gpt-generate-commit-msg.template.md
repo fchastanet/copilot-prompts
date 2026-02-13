@@ -4,13 +4,13 @@ mode: ask
 description: gpt generate a commit message based on current chat window.
 ---
 
-Generate one consolidated commit message summarized and cleaned from all the commit messages below. The resulting message can be copied in clipboard as markdown.
+Generate one consolidated commit message summarized and cleaned from all the commit messages below. The resulting
+message can be copied in clipboard as markdown.
 
 # Commit Message Guidelines
 
-Generate a markdown commit message using the following structure and formatting, including emojis and scopes.
-Do **NOT** enclose the commit message in code blocks.
-Use `git diff` output to understand the changes made.
+Generate a markdown commit message using the following structure and formatting, including emojis and scopes. Do **NOT**
+enclose the commit message in code blocks. Use `git diff` output to understand the changes made.
 
 ## 1. Title (First Line)
 

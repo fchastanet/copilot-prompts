@@ -9,6 +9,7 @@ SKILL_FILE="skills/commit-message/SKILL.md"
 INSTRUCTIONS_FILE=".github/commit-message.instructions.md"
 REFERENCE="skills/commit-message/references/example-commit-msg.md"
 COMMIT_MSG_PROMPT="prompts/gpt-generate-commit-msg.prompt.md"
+COMMIT_MSG_PROMPT_TEMPLATE="prompts.templates/gpt-generate-commit-msg.prompt.template.md"
 
 trap 'rm -f "/tmp/template.tmp" || true' EXIT
 
@@ -52,7 +53,7 @@ replace \
 echo "✓ Synced commit message instructions"
 
 # ----- .github/prompts/gpt-generate-commit-msg.prompt.md -------
-cp "${COMMIT_MSG_PROMPT%.md}.template.md" "${COMMIT_MSG_PROMPT}"
+cp "${COMMIT_MSG_PROMPT_TEMPLATE}" "${COMMIT_MSG_PROMPT}"
 
 replace \
     "/!\[Example Commit Message\]\(\/.github\/skills\/commit-message\/references\/example-commit-msg\.md\)/" \
@@ -60,9 +61,9 @@ replace \
     "$REFERENCE"
 echo "✓ Synced commit message prompt"
 
-# ----- prompts/compile-stash-commit-messages.template.md -------
-cp "prompts/compile-stash-commit-messages.template" "prompts/compile-stash-commit-messages.md"
-# concat .github/commit-message.instructions.md to prompts/compile-stash-commit-messages.md
-cat "$INSTRUCTIONS_FILE" >> "prompts/compile-stash-commit-messages.md"
+# ----- prompts/compile-stash-commit-messages.prompt.md -------
+cp "prompts.templates/compile-stash-commit-messages.template.md" "prompts/compile-stash-commit-messages.prompt.md"
+# concat .github/commit-message.instructions.md to prompts/compile-stash-commit-messages.prompt.md
+cat "$INSTRUCTIONS_FILE" >> "prompts/compile-stash-commit-messages.prompt.md"
 
 echo "✓ Synced compile stash commit messages prompt"
