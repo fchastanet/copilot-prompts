@@ -137,13 +137,7 @@ repos:
     hooks:
       - id: sync-templates
         name: Sync templates
-        entry: scripts/sync-templates.sh
+        entry: templates/sync-templates.sh
         language: script
         stages: [pre-commit, pre-push]
         pass_filenames: false
-        files: |
-          (?x)(
-             ^skills/commit-message/SKILL\.md$|
-             ^skills/commit-message/references/example-commit-msg\.md$|
-             ^prompts/gpt-generate-commit-msg\.prompt\.md$
-          )
