@@ -69,8 +69,8 @@ repos:
           - mdformat-gfm
         exclude: |
           (?x)(
-            ^\.github/prompts/|
-            ^.github/commit-message.instructions.md$|
+            ^prompts/|
+            ^\.github/commit-message.instructions.md$|
             AGENTS\.md|
             SKILL\.md
           )
@@ -84,8 +84,8 @@ repos:
           - --initial-numbering=1
         exclude: |
           (?x)(
-            ^\.github/prompts/|
-            ^.github/commit-message.instructions.md$|
+            ^prompts/|
+            ^\.github/commit-message.instructions.md$|
             ^doc/ai/|
             AGENTS\.md|
             SKILL\.md
@@ -109,8 +109,8 @@ repos:
         args: [--disable=MD041]
         exclude: |
           (?x)(
-            ^\.github/prompts/|
-            ^.github/commit-message.instructions.md$|
+            ^prompts/|
+            ^\.github/commit-message.instructions.md$|
             ^doc/ai/
           )
 
@@ -137,13 +137,13 @@ repos:
     hooks:
       - id: sync-templates
         name: Sync templates
-        entry: .github/scripts/sync-templates.sh
+        entry: scripts/sync-templates.sh
         language: script
         stages: [pre-commit, pre-push]
         pass_filenames: false
         files: |
           (?x)(
-             ^\.github/skills/commit-message/SKILL\.md$|
-             ^\.github/skills/commit-message/references/example-commit-msg\.md$|
-             ^\.github/prompts/gpt-generate-commit-msg\.prompt\.md$
+             ^skills/commit-message/SKILL\.md$|
+             ^skills/commit-message/references/example-commit-msg\.md$|
+             ^prompts/gpt-generate-commit-msg\.prompt\.md$
           )

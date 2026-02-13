@@ -5,15 +5,15 @@ tags: [github-copilot, discovery, meta, prompt-engineering, agents, react, types
 items:
   - path: .github/commit-message.instructions.md
     kind: instruction
-  - path: .github/prompts/boost-prompt.prompt.md
+  - path: prompts/boost-prompt.prompt.md
     kind: prompt
-  - path: .github/prompts/gpt-generate-commit-msg.prompt.md
+  - path: prompts/gpt-generate-commit-msg.prompt.md
     kind: prompt
-  - path: .github/prompts/claude-generate-commit-msg.prompt.md
+  - path: prompts/claude-generate-commit-msg.prompt.md
     kind: prompt
-  - path: .github/prompts/smart.prompt.md
+  - path: prompts/smart.prompt.md
     kind: prompt
-  - path: .github/agents/refactor-class.prompt.md
+  - path: agents/refactor-class.prompt.md
     kind: agent
   - path: skills/commit-message/SKILL.md
     kind: skill

@@ -1,14 +1,14 @@
 #!/bin/bash
 # Sync commit message instructions from skill to instructions file
-# This script copies the content of .github/skills/commit-message/SKILL.md
+# This script copies the content of skills/commit-message/SKILL.md
 # to .github/commit-message.instructions.md while removing the skill frontmatter
 
 set -e
 
-SKILL_FILE=".github/skills/commit-message/SKILL.md"
+SKILL_FILE="skills/commit-message/SKILL.md"
 INSTRUCTIONS_FILE=".github/commit-message.instructions.md"
-REFERENCE=".github/skills/commit-message/references/example-commit-msg.md"
-COMMIT_MSG_PROMPT=".github/prompts/gpt-generate-commit-msg.prompt.md"
+REFERENCE="skills/commit-message/references/example-commit-msg.md"
+COMMIT_MSG_PROMPT="prompts/gpt-generate-commit-msg.prompt.md"
 
 trap 'rm -f "/tmp/template.tmp" || true' EXIT
 
