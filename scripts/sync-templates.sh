@@ -58,5 +58,11 @@ replace \
     "/!\[Example Commit Message\]\(\/.github\/skills\/commit-message\/references\/example-commit-msg\.md\)/" \
     "${COMMIT_MSG_PROMPT}" \
     "$REFERENCE"
-
 echo "✓ Synced commit message prompt"
+
+# ----- prompts/compile-stash-commit-messages.template.md -------
+cp "prompts/compile-stash-commit-messages.template" "prompts/compile-stash-commit-messages.md"
+# concat .github/commit-message.instructions.md to prompts/compile-stash-commit-messages.md
+cat "$INSTRUCTIONS_FILE" >> "prompts/compile-stash-commit-messages.md"
+
+echo "✓ Synced compile stash commit messages prompt"
