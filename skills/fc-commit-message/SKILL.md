@@ -1,5 +1,5 @@
 ---
-name: commit-message
+name: fc-commit-message
 description: Guidelines for writing clear and structured commit messages
 ---
 # Commit Message Guidelines

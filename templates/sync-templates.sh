@@ -25,12 +25,12 @@ trap 'rm -f "/tmp/example-commit-msg.tmp" || true' EXIT
 (
     echo
     echo '````markdown'
-    cat "skills/commit-message/references/example-commit-msg.md"
+    cat "skills/fc-commit-message/references/example-commit-msg.md"
     echo '````'
 ) > "/tmp/example-commit-msg.tmp"
 
 
-copy "skills/commit-message/SKILL.md" "instructions/commit-message.instructions.md"
+copy "skills/fc-commit-message/SKILL.md" "instructions/commit-message.instructions.md"
 replacePatternByFileUsingSed \
     "!\[Example Commit Message\]\(references\/example-commit-msg.md\)" \
     "instructions/commit-message.instructions.md" \
@@ -39,16 +39,16 @@ replacePatternByFileUsingSed \
 sed -i '/^---$/,/^---$/d' "instructions/commit-message.instructions.md"
 echo "✓ Synced commit message instructions"
 
-copy "templates/gpt-generate-commit-msg.prompt.template.md" "prompts/gpt-generate-commit-msg.prompt.md"
+copy "templates/gpt-generate-commit-msg.prompt.template.md" "prompts/fc-gpt-generate-commit-msg.prompt.md"
 replacePatternByFileUsingSed \
     "\{instructions\/commit-message\.instructions\.md\}" \
-    "prompts/gpt-generate-commit-msg.prompt.md" \
+    "prompts/fc-gpt-generate-commit-msg.prompt.md" \
     "instructions/commit-message.instructions.md"
 echo "✓ Synced commit message prompt"
 
-copy "templates/compile-stash-commit-messages.prompt.template.md" "prompts/compile-stash-commit-messages.prompt.md"
+copy "templates/compile-stash-commit-messages.prompt.template.md" "prompts/fc-compile-stash-commit-messages.prompt.md"
 replacePatternByFileUsingSed \
     "\{instructions\/commit-message\.instructions\.md\}" \
-    "prompts/compile-stash-commit-messages.prompt.md" \
+    "prompts/fc-compile-stash-commit-messages.prompt.md" \
     "instructions/commit-message.instructions.md"
 echo "✓ Synced compile stash commit messages prompt"

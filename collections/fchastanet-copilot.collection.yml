@@ -7,21 +7,21 @@ tags: [github-copilot, discovery, meta, prompt-engineering, agents, react, types
 items:
   - path: instructions/commit-message.instructions.md
     kind: instruction
-  - path: prompts/boost-prompt.prompt.md
+  - path: prompts/fc-boost-prompt.prompt.md
     kind: prompt
-  - path: prompts/gpt-generate-commit-msg.prompt.md
+  - path: prompts/fc-gpt-generate-commit-msg.prompt.md
     kind: prompt
-  - path: prompts/claude-generate-commit-msg.prompt.md
+  - path: prompts/fc-claude-generate-commit-msg.prompt.md
     kind: prompt
-  - path: prompts/smart.prompt.md
+  - path: prompts/fc-smart.prompt.md
     kind: prompt
-  - path: agents/refactor-class.prompt.md
+  - path: agents/fc-refactor-class.prompt.md
     kind: agent
-  - path: skills/commit-message/SKILL.md
+  - path: skills/fc-commit-message/SKILL.md
     kind: skill
-  - path: skills/copy-clipboard/SKILL.md
+  - path: skills/fc-copy-clipboard/SKILL.md
     kind: skill
-  - path: skills/human-interaction/SKILL.md
+  - path: skills/fc-human-interaction/SKILL.md
     kind: skill
 display:
   ordering: alpha # or "manual" to preserve the order above

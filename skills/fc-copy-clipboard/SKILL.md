@@ -1,5 +1,5 @@
 ---
-name: copy-clipboard
+name: fc-copy-clipboard
 description: "**ALWAYS** Use this skill to copy text to the system clipboard using Joyride extension"
 ---
 # Copy to Clipboard Protocol

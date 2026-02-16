@@ -1,5 +1,5 @@
 ---
-name: human-interaction
+name: fc-human-interaction
 description: 'Interactive requirement clarification system that asks one question at a time using joyride_request_human_input to refine prompts and avoid assumptions. Use when creating task specifications, gathering requirements for complex projects, validating architectural decisions, or when user intent is ambiguous. Iteratively asks numbered questions (1/5, 2/5...), waits for answers, shows prompt updates, and continues until user types "stop". Creates final documentation in doc/ai/{date}-{title}.md. Keywords: clarify requirements, prompt refinement, decision-making, scope validation, iterative dialogue, requirement gathering, task specification.'
 ---
 
