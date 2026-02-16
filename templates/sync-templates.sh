@@ -24,9 +24,9 @@ trap 'rm -f "/tmp/example-commit-msg.tmp" || true' EXIT
 # create a temporary file to store the content of instructions/commit-message.instructions.md with fences
 (
     echo
-    echo '```markdown'
+    echo '````markdown'
     cat "skills/commit-message/references/example-commit-msg.md"
-    echo '```'
+    echo '````'
 ) > "/tmp/example-commit-msg.tmp"
 
 

@@ -61,7 +61,7 @@ Use `git diff` output to understand the changes made.
 
 Follow the formatting, emoji usage, and scope tagging shown in the example below:
 
-```markdown
+````markdown
 ✨🔧(patient): Patient Management Service Refactor (Domain Layer)
 
 Refactor patient management logic in the domain and application layers for improved testability and maintainability.
@@ -132,6 +132,6 @@ Update related tests and documentation.
 
 - [ ] Migration steps documented
 - [ ] New patterns reviewed
-```
+````
 
 Do not include any explanations or additional text.

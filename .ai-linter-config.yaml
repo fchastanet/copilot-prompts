@@ -19,17 +19,17 @@ max_warnings: 10
 # Directories to ignore during validation
 # These patterns will be ignored when scanning for AGENTS.md files
 ignore_dirs:
-  - ".git"
-  - "__pycache__"
-  - "node_modules"
-  - "build"
-  - "dist"
-  - ".vscode"
-  - ".pytest_cache"
-  - "venv"
-  - "env"
-  - ".history"
-  - "doc"
+  - '.git'
+  - '__pycache__'
+  - 'node_modules'
+  - 'build'
+  - 'dist'
+  - '.vscode'
+  - '.pytest_cache'
+  - 'venv'
+  - 'env'
+  - '.history'
+  - 'doc'
 
 # Code snippet validation
 # Maximum number of lines allowed in a code snippet before warning
@@ -39,17 +39,17 @@ code_snippet_max_lines: 3
 # Prompt and agent directories to validate
 # These directories will be checked for token count, references, skills, and tools
 prompt_dirs:
-  - ".github/prompts"
+  - '.github/prompts'
 
 agent_dirs:
-  - ".github/agents"
+  - '.github/agents'
 
 # Resource directories to check for unreferenced files
 # All files in these directories should be referenced somewhere in markdown files
 resource_dirs:
-  - "references"
-  - "assets"
-  - "scripts"
+  - 'references'
+  - 'assets'
+  - 'scripts'
 
 # Log level for unreferenced files in resource directories
 # Options: ERROR, WARNING, INFO
@@ -87,14 +87,14 @@ mandatory_sections_log_level: WARNING
 # List of mandatory sections that must be present in AGENTS.md files
 # These sections help ensure agents have proper documentation (if enable_mandatory_sections is true)
 mandatory_sections:
-  - Overview                   # Brief summary of the agent’s purpose and scope.
-  - "Limitations"              # Known limitations or boundaries of the agent.
-  - "Navigating the Codebase"
-  - "Build & Commands"
-  - "Code Style"
-  - "Testing"
-  - "Security"
-  - "Configuration"
+  - Overview # Brief summary of the agent’s purpose and scope.
+  - 'Limitations' # Known limitations or boundaries of the agent.
+  - 'Navigating the Codebase'
+  - 'Build & Commands'
+  - 'Code Style'
+  - 'Testing'
+  - 'Security'
+  - 'Configuration'
 
 # Agent section validation configuration
 # Enable or disable advised section checks
@@ -103,7 +103,7 @@ enable_advised_sections: true
 # List of advised sections for AGENTS.md files
 # Missing these will trigger advice-level messages (if enable_advised_sections is true)
 advised_sections:
-  - "Architecture"
-  - "Build Process"
-  - "Git Commit Conventions"
-  - "Troubleshooting"          # Common issues and how to resolve them.
+  - 'Architecture'
+  - 'Build Process'
+  - 'Git Commit Conventions'
+  - 'Troubleshooting' # Common issues and how to resolve them.

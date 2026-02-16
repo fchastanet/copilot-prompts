@@ -1,6 +1,8 @@
 id: fchastanet-copilot-typescript
 name: Fchastanet Copilot Typescript
-description: "Meta prompts that help you discover and generate curated GitHub Copilot chat modes, collections, instructions, prompts, and agents focused on TypeScript development."
+description: >-
+  Meta prompts that help you discover and generate curated GitHub Copilot chat modes, collections, instructions,
+  prompts, and agents focused on TypeScript development.
 tags: [github-copilot, discovery, meta, prompt-engineering, agents, react, typescript]
 items:
   - path: instructions/commit-message.instructions.md

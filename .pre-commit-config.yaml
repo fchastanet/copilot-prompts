@@ -59,7 +59,7 @@ repos:
         entry: mdformat # Executable to run, with fixed options
         language: python
         types: [markdown]
-        args: [--wrap, "120", --number]
+        args: [--wrap, '120', --number]
         additional_dependencies:
           - mdformat-front-matters
           - mdformat-shfmt
@@ -102,11 +102,22 @@ repos:
           - --add-toc-title=False
           - --add-horizontal-rules=False
 
+  - repo: https://github.com/ComPWA/prettier-pre-commit
+    rev: v3.4.2
+    hooks:
+      - id: prettier
+        args: [--cache]
+        exclude: |
+          (?x)(
+            \.md$|
+            ^\.vscode/.*\.code-snippets$
+          )
+
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.47.0
     hooks:
       - id: markdownlint
-        args: [--disable=MD041]
+        args: [--disable=MD041, --fix]
         exclude: |
           (?x)(
             ^prompts/|
