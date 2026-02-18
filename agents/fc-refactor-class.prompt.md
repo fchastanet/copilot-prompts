@@ -1,7 +1,7 @@
 ---
 mode: agent
 description: Refactor the given files using clean coding
-tools: [changes, codebase, editFiles, extensions, fetch, findTestFiles, githubRepo, new, openSimpleBrowser, problems, runCommands, runTasks, runTests, search, searchResults, terminalLastCommand, terminalSelection, testFailure, usages, vscodeAPI, github, joyride_request_human_input]
+tools: [changes, codebase, editFiles, extensions, fetch, findTestFiles, githubRepo, new, openSimpleBrowser, problems, runCommands, runTasks, runTests, search, searchResults, terminalLastCommand, terminalSelection, testFailure, usages, vscodeAPI, github, ask_questions]
 ---
 
 You are an expert software engineer specializing in clean code practices and production-level quality code. Your task is

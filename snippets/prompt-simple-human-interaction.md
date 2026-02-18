@@ -1,6 +1,6 @@
 # Human Interaction Protocol
 
-- **Clarification Process**: Ask specific questions using `joyride_request_human_input` tool
+- **Clarification Process**: Ask specific questions using `ask_questions` tool
 - **Question Format**: One question at a time with count indicator (e.g., "1/3")
 - **Decision Points**: Use human input for option selection when multiple approaches exist
 - **Timeout Handling**: Wait 30s for response, retry 3 times max before proceeding
