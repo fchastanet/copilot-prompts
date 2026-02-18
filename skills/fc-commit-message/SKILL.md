@@ -5,11 +5,7 @@ description: Guidelines for writing clear and structured commit messages
 # Commit Message Guidelines
 
 Generate a markdown commit message using the following structure and formatting, including emojis and scopes.
-Do **NOT** enclose the commit message in code blocks.
-The resulting message can be copied in clipboard as markdown.
-Never provide a markdown file snippet in answers (it doesn't work well with this interface).
-Instead, replace all triple backquotes with $$$ (I’ll restore them manually).
-Finally, share the markdown file by enclosing its content in triple backquotes as raw text for easy copying.
+Generate the raw markdown commit message, enclosed in quadruple backticks (````), and display it in the chat window.
 Use `git diff` output to understand the changes made.
 
 ## 1. Title (First Line)
@@ -46,8 +42,9 @@ Use `git diff` output to understand the changes made.
 
 ## 4. Remove unnecessary details
 
-- Remove any `Co-authored-by` lines from the commit message, as they are not relevant to the final
-  consolidated message.
+- Remove all `Co-authored-by` lines from the commit message, but keep or
+  add this one `Co-authored-by: François Chastanet <237869+fchastanet@users.noreply.github.com>`
+  at the end of the commit message preceded by a separator line.
 - Remove any references to "WIP", "temp", or similar placeholders, as they do not provide meaningful
   information about the changes made.
 - Remove any redundant or duplicate information that may be present in the stash commit messages,
