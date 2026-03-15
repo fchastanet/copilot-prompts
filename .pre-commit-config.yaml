@@ -87,8 +87,9 @@ repos:
             ^prompts/|
             ^instructions/commit-message.instructions.md$|
             ^doc/ai/|
-            AGENTS\.md|
-            SKILL\.md
+            /AGENTS\.md$|
+            /SKILL\.md$|
+            \.presentation\.md$
           )
 
   - repo: https://github.com/jsh9/markdown-toc-creator
@@ -122,7 +123,19 @@ repos:
           (?x)(
             ^prompts/|
             ^instructions/commit-message.instructions.md$|
-            ^doc/ai/
+            ^doc/ai/|
+            \.presentation\.md$
+          )
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.47.0
+    hooks:
+      # Specific for presentation markdown files
+      - id: markdownlint
+        args: ['--disable=MD041,MD025,MD023', --fix]
+        exclude: |
+          (?x)(
+            \.presentation\.md$
           )
 
   - repo: https://github.com/fchastanet/jumanjihouse-pre-commit-hooks
