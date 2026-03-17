@@ -19,6 +19,8 @@ items:
     kind: agent
   - path: skills/fc-commit-message/SKILL.md
     kind: skill
+  - path: skills/fc-ask-questions/SKILL.md
+    kind: skill
   - path: skills/fc-copy-clipboard/SKILL.md
     kind: skill
   - path: skills/fc-human-interaction/SKILL.md
