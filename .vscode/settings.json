@@ -3,5 +3,7 @@
     {
       "file": "instructions/commit-message.instructions.md"
     }
-  ]
+  ],
+  "markdownlint.severityForWarning": "Ignore",
+  "markdownlint.severityForError": "Ignore"
 }
