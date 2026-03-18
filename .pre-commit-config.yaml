@@ -156,12 +156,3 @@ repos:
     hooks:
       - id: ai-linter-workspace
         args: [--skills]
-
-  - repo: local
-    hooks:
-      - id: sync-templates
-        name: Sync templates
-        entry: templates/sync-templates.sh
-        language: script
-        stages: [pre-commit, pre-push]
-        pass_filenames: false
