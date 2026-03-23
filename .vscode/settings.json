@@ -1,9 +1,0 @@
-{
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    {
-      "file": ".github/skills/fc-commit-message/SKILL.md"
-    }
-  ],
-  "markdownlint.severityForWarning": "Ignore",
-  "markdownlint.severityForError": "Ignore"
-}
