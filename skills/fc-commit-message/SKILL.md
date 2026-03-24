@@ -5,15 +5,39 @@ description: "Use when: writing commit messages, reviewing changes before commit
 
 # Commit Message & Changeset Guidelines
 
+## Analysis
+
+As a Senior developer, you will analyze the changes in staged files and generate a commit message that follows the guidelines below.
+
+**CRITICAL: Review ALL changed files without exception.** Use git diff or the changes tool to get a complete list of modified files, then analyze each one thoroughly:
+
+- List ALL files that have changes (added, modified, or deleted)
+- For EACH file, examine every added, removed, and modified line
+- Ensure no file is overlooked or ignored in your analysis
+- Consider the cumulative impact of changes across all files
+
+Determine the scope based on ALL changes combined. Analyse deeply each change and determine the appropriate level of detail for the commit message (minimal, standard, or comprehensive).
+
+⚠️ **When multiple unrelated files are changed** (e.g., infrastructure files + documentation + scripts), ensure the commit title and scope reflect the breadth of changes - don't focus on just one aspect.
+
+**Identify when there are multiple changes** that span different areas of the codebase, and decide when to include a detailed description with section headers and bullet points.
+
 ## Required Format Structure
 
 ### Title (First Line)
 
+⚠️ **CRITICAL: The title MUST represent ALL changes in the commit, not just one file or aspect.**
+
+- **Summary**: If there are multiple unrelated files or areas changed (e.g., Dockerfile + docs + scripts), the title must either:
+  - Use a generic scope that covers all changes (e.g., `[✨feat][project]` or `[✨feat][repo]`)
+  - Mention all major aspects in the description (e.g., "Add commit guidelines, Dockerfile, and demo script")
+  - **NEVER focus only on one file when multiple unrelated files are changed**
 - **Length**: 120 characters maximum
 - **Unique**: only the first line can be a title
 - **Imperative Mood**: "add" not "adds" or "added", present tense
 - **Format**: `[emoji][scope]: description`
-  - Example: `[✨feat][auth]: Add WebSocket integration`
+  - Example single area: `[✨feat][auth]: Add WebSocket integration`
+  - Example multiple areas: `[✨feat][project]: Add commit guidelines, Dockerfile, and demo script`
 - **Capitalization**: First letter capitalized
 - **Blank line**: Always add a blank line after the title
 
@@ -32,9 +56,7 @@ description: "Use when: writing commit messages, reviewing changes before commit
 - **DO NOT include if**
   - Summary paragraph is not needed
   - The commit only affects a single area or is straightforward
-  - The changes are self-explanatory from the title and summary
   - The commit is a simple fix or minor enhancement that does not require additional context
-  - The changes are limited to a small number of files and do not impact multiple components or layers of the application
   - The commit does not introduce any new patterns, migrations, or complex logic that would benefit from additional explanation
 - **If included**:
   - **Organization**: Use section headers with relevant emojis
@@ -84,6 +106,7 @@ Specify the affected component: `[auth]`, `[api]`, `[database]`, `[ui]`, etc.
 - ❌ Never omit the scope from the title
 - ❌ Never use imperative beyond the first sentence in the summary
 - ❌ Never exceed line length guidelines without good reason (and then explain why)
+- ❌ **Never write a title that focuses on only one file when multiple unrelated files are changed** - the title must represent ALL changes or use a generic scope
 
 ### Footer (optional)
 
@@ -106,14 +129,17 @@ More complex changes:
 
 ## When Generating Commit Messages
 
-1. **Analyze the changes** using git diff or the changes tool
-2. **Determine scope**: Single file, component, or multiple areas?
-3. **Pick appropriate detail level** (minimal, standard, or comprehensive)
-4. **Select emoji** that best represents the primary change
-5. **Define scope** (the area/component affected)
-6. **Write imperative title** that completes: "This commit will..."
-7. **Add summary** explaining the why
-8. **Add details** only if changes span multiple areas or are complex
+1. **Analyze ALL changes** using git diff or the changes tool - list every modified file and review all changes
+2. **Determine scope**: Single file, component, or multiple areas? Consider ALL files in your analysis
+3. **Pick appropriate detail level** (minimal, standard, or comprehensive) based on the totality of changes
+4. **Select emoji** that best represents the primary change across all files
+5. **Define scope** (the area/component affected) - if multiple files span different areas, reflect that
+6. **Write imperative title** that completes: "This commit will..." and accurately reflects ALL changes:
+   - ⚠️ **If multiple unrelated files are changed** (e.g., Dockerfile + docs + scripts), the title MUST mention all major aspects or use a generic scope like `[project]` or `[repo]`
+   - ❌ **BAD**: `[✨feat][docs]: Add commit message guidelines` (when Dockerfile and scripts were also added)
+   - ✅ **GOOD**: `[✨feat][project]: Add commit guidelines, Dockerfile, and demo script`
+7. **Add summary** explaining the why, covering all significant changes
+8. **Add details** if changes span multiple areas, multiple files, or are complex
 9. **Remove footer** with co-authored-by
 10. **Output in code block** using quadruple backticks
 

@@ -1,4 +1,4 @@
-[✨feat]\[checkout\]: add discount code validation
+[✨feat][checkout]: add discount code validation
 
 - Validate format before submission
 - Return meaningful error messages
