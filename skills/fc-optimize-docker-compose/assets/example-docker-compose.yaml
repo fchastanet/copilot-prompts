@@ -1,0 +1,185 @@
+services:
+  # ------------------------------------------------------------
+  # Node.js container for building js dependencies
+  # ------------------------------------------------------------
+  nodejs:
+    container_name: nodejs
+    image: nodejs
+    platform: linux/x86_64
+    build:
+      context: ./workspace/nodejs
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    command: tail -f /dev/null # Keep the container running for development purposes
+    # Mount the SSH agent to allow the container to use the host's SSH keys
+    # for operations like git clone, typically to download private dependencies
+    ssh:
+      - default # mount the default ssh agent
+    volumes:
+      - ./workspace/app:/data/app
+
+  # ------------------------------------------------------------
+  # web server for hosting the application
+  # ------------------------------------------------------------
+  webserver:
+    container_name: webserver
+    image: webserver
+    platform: linux/x86_64
+    build:
+      context: ./workspace/webserver
+      dockerfile: Dockerfile
+      target: '${WEB_SERVER_TARGET:-base}'
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    healthcheck:
+      test: ['CMD', 'wget', '-O/dev/null', '-q', 'http://localhost/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    ssh:
+      - default # mount the default ssh agent
+    ports:
+      - '${HOST_WEB_SERVER_PORT:-80}:80'
+      - '${HOST_WEB_SERVER_TEST_PORT:-81}:81'
+    volumes:
+      - ./workspace/webserver/src:/data/src
+    depends_on:
+      nodejs:
+      redis:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+      mailhog:
+    networks:
+      backend:
+      common-network:
+        aliases:
+          - app.example.lan
+          - test.example.lan
+
+  # ------------------------------------------------------------
+  # MySQL database for application data storage
+  # ------------------------------------------------------------
+  mysql:
+    container_name: mysql8
+    image: mysql:8.0.25
+    command:
+      --character-set-server=utf8 --collation-server=utf8_general_ci
+      --default-authentication-plugin=mysql_native_password --sql-mode="" --disable-log-bin
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+    platform: linux/x86_64
+    volumes:
+      - app_databases_mysql8:/var/lib/mysql
+    ports:
+      - '${HOST_MYSQL_PORT:-3306}:3306'
+    networks:
+      - backend
+
+  # ------------------------------------------------------------
+  # Redis for caching and session management
+  # ------------------------------------------------------------
+  redis:
+    container_name: redis
+    image: redis:5.0-alpine
+    platform: linux/x86_64
+    networks:
+      - backend
+
+  # ------------------------------------------------------------
+  # SMTP mail Catcher
+  # ------------------------------------------------------------
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog:v1.0.0
+    platform: linux/x86_64
+    ports:
+      - '${HOST_MAILHOG_PORT:-8025}:8025'
+    networks:
+      - backend
+
+  # ------------------------------------------------------------
+  # Dashboard UI
+  # ------------------------------------------------------------
+  dashboard:
+    container_name: dashboard
+    image: dashboard
+    platform: linux/x86_64
+    build:
+      context: './workspace/dashboard'
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    healthcheck:
+      test: ['CMD', 'wget', '-O/dev/null', '-q', 'http://localhost:8200/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: ${DASHBOARD_HEALTHCHECK_START_PERIOD:-40s}
+    environment:
+      - ASSETS_URL=${DASHBOARD_ASSETS_URL:-http://app:8200/}
+    ports:
+      - '${HOST_DASHBOARD_PORT:-8200}:8200'
+    volumes:
+      - ./workspace/dashboard:/app
+    networks:
+      - frontend
+
+  # ------------------------------------------------------------
+  # React application for frontend development
+  # ------------------------------------------------------------
+  react-app:
+    container_name: react-app
+    build:
+      context: ./workspace/react-app
+      target: dev
+      tags:
+        - 'react-app'
+    entrypoint: '/usr/bin/entrypoint-dev.sh'
+    command: npm run start
+    ports:
+      - ${REACT_APP_PORT:-3000}:3000
+    volumes:
+      - ./workspace/react-app/src:/app
+    healthcheck:
+      test: ['CMD', 'wget', '-O/dev/null', '-q', 'http://localhost:3000']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: ${REACT_APP_HEALTHCHECK_START_PERIOD:-40s}
+    networks:
+      common-network:
+        aliases:
+          - react-app.example.lan
+
+  # ------------------------------------------------------------
+  # React Storybook for UI component development and testing
+  # ------------------------------------------------------------
+  react-storybook:
+    image: ui
+    depends_on:
+      react-app:
+        condition: service_healthy
+    profiles:
+      - 'storybook'
+    command: npm run storybook
+    ports:
+      - ${STORYBOOK_PORT:-6006}:6006
+    volumes:
+      - ./workspace/react-app/src:/app
+
+# Networks
+networks:
+  backend:
+  frontend:
+  common-network:
+    external: true
+
+# Volumes for persistent data storage, such as MySQL data
+volumes:
+  app_databases_mysql8:

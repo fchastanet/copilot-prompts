@@ -1,0 +1,16 @@
+services:
+  web:
+    image: nginx
+    networks:
+      - frontend
+      - backend
+
+  api:
+    image: myapi
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
+    internal: true

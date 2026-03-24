@@ -1,0 +1,10 @@
+services:
+  database:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+
+volumes:
+  postgres_data:
