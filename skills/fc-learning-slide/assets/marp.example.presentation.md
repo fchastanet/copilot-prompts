@@ -160,10 +160,10 @@ ______________________________________________________________________
 You can set background image for a slide by using `bg` keyword.
 
 ```markdown
-![bg opacity](https://yhatt-marp-cli-example.netlify.com/assets/gradient.jpg)
+![bg opacity](https://img.freepik.com/free-vector/coloured-blurred-background_1112-507.jpg)
 ```
 
-![bg opacity](https://yhatt-marp-cli-example.netlify.com/assets/gradient.jpg)
+![bg opacity](https://img.freepik.com/free-vector/coloured-blurred-background_1112-507.jpg)
 
 ______________________________________________________________________
 

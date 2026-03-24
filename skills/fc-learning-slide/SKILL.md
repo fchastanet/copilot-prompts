@@ -2,7 +2,8 @@
 name: "fc-learning-slide"
 description: |
   Learn how to create engaging learning slides that effectively communicate your message
-  and keep your audience engaged."
+  and keep your audience engaged. This skill covers best practices for slide design, content organization, and presentation techniques to help you create impactful learning materials.
+license: MIT
 ---
 
 # Introduction
@@ -60,6 +61,7 @@ focus on a specific topic or concept, and the information will be presented in a
 and easy-to-understand way. Use bullet points, images, and diagrams to enhance the visual
 appeal and make the content more engaging.
 The slide will include basic information in order to not lose the learner.
+Most of time try to start by a problematic to solve or a question to answer, this will help to capture attention and make the content more engaging.
 
 #### Footer
 
