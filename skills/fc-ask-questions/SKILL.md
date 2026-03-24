@@ -14,7 +14,7 @@ description: 'Interactive requirement clarification system that asks one questio
   using `ask_questions` tool.
 - **Skip command**: If I skip a command, you will using `ask_questions` tool ask for clarification
   on why and correct the rest of the process according to the answer.
-- **Feedback Loop**: After 50 iterations or whenever necessary, use `ask_questions` tool for feedback
+- **Feedback Loop**: Every 20 iterations or whenever necessary, use `ask_questions` tool for feedback
   on the process and make adjustments as necessary
 - **Final Review**: Before finalizing the improved prompt, present it to me for review and approval
   using `ask_questions` tool.
