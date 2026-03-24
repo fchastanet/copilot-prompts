@@ -1,0 +1,54 @@
+# Prevent accidental cache invalidation by ignoring these files/folders
+
+# backup/unnecessary files
+**/*~
+**/*.swp
+**/.DS_Store
+**/.zone.identifier
+**/.history/
+
+# git including submodules
+**/.git/
+**/.gitattributes
+**/.gitignore
+**/.github/
+.pre-commit-config.yaml
+
+# security
+**/.env*
+**/.env.template
+**/.aws
+**/.ssh
+**/id_rsa
+
+# IDEs
+**/.vscode/
+**/.idea/
+**/#WebStorm
+
+# logs
+**/coverage
+logs/
+var/logs/
+reports/
+**/junit.xml
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# files traditionally not useful in docker images
+helm*/
+**/*.md
+Jenkinsfile*
+postman/
+Dockerfile*
+
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# build
+build/
+storybook*/
+output/

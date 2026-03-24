@@ -1,0 +1,56 @@
+# Prevent accidental cache invalidation by ignoring these files/folders
+
+# backup/unnecessary files
+**/*~
+**/*.swp
+**/.DS_Store
+**/.zone.identifier
+**/.history/
+
+# git including submodules
+**/.git/
+**/.gitattributes
+**/.gitignore
+**/.github/
+**/.pre-commit-config.yaml
+
+# security
+**/.env*
+**/.env.template
+**/.aws
+**/.ssh
+**/id_rsa
+
+# IDEs
+.vscode/
+.idea/
+**/#WebStorm
+
+# logs
+**/coverage
+logs/
+var/logs/
+/reports/
+
+# files traditionaly not useful in docker images
+helm*/
+**/*.md
+Jenkinsfile*
+
+postman/
+
+# Dotnet related - Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Dotnet related - MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*

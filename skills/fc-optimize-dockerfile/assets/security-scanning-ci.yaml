@@ -1,0 +1,9 @@
+# GitHub Actions example
+- name: Run Hadolint
+  run: |
+    docker run --rm -i hadolint/hadolint < Dockerfile
+
+- name: Scan image for vulnerabilities
+  run: |
+    docker build -t myapp .
+    trivy image myapp
