@@ -397,6 +397,7 @@ cosign verify -key cosign.pub myregistry.com/myapp:v1.0.0
   - Use `docker build --no-cache` to verify the build process and caching behavior
   - Analyze image size with `docker images` and `docker history` to identify optimization opportunities
   - Integrate validation and linting into CI/CD pipelines for automated checks
+  - Continuous improvement from errors found during builds and linting, indicate in the report what needs to be added to `fc-optimize-dockerfile` skill next time.
 
 ## Troubleshooting Docker Builds & Runtime
 

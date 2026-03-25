@@ -298,6 +298,8 @@ Generate CSV with millisecond measurements:
 
 Use `shellcheck` for static analysis when available. If not available, use docker koalaman/shellcheck:stable image.
 
+Continuous improvement from errors found during builds and linting, indicate in the report what needs to be added to `fc-optimize-shell-scripts` skill next time.
+
 ## External References
 
 - [Pure Bash Bible](https://github.com/dylanaraps/pure-bash-bible?tab=readme-ov-file) - Collection of pure bash alternatives to external commands

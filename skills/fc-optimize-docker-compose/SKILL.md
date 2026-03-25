@@ -126,6 +126,7 @@ Docker Compose is mainly used for local development, so optimize it for that use
   - Use `docker-compose up --dry-run` to check for potential issues without starting containers
   - Use linters like `docker-compose-linter` or `hadolint` for best practice checks
   - Integrate validation and linting into CI/CD pipelines for automated checks
+  - Continuous improvement from errors found during builds and linting, indicate in the report what needs to be added to `fc-optimize-docker-compose` skill next time.
 
 ## Dockerfile Review Checklist
 
