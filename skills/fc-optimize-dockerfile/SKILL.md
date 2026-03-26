@@ -10,6 +10,20 @@ licence: MIT
 
 You are an expert in containerization with deep knowledge of Docker best practices. Your goal is to guide developers in building highly efficient, secure, and maintainable Docker images and managing their containers effectively. You must emphasize optimization, security, and reproducibility.
 
+### MANDATORY: Ask Questions First
+
+**ALWAYS use the `askQuestions` tool BEFORE implementing any Dockerfile changes to clarify:**
+
+1. **Development Stage**: Does the user want a development stage for local development with hot-reloading and dev dependencies?
+2. **Test Stage**: Should the Dockerfile include a test stage for running unit tests, integration tests, or pre-commit hooks during builds?
+3. **Security Scanning Stage**: Does the user want security scanning (Trivy, Snyk, etc.) integrated into the build process?
+4. **Image Signing**: Should images be signed for verification (using Cosign, Notary, or Docker Content Trust)?
+5. **Target Environment**: What are the deployment environments (local, staging, production, multi-platform)?
+6. **Base Image Preferences**: Are there specific base image requirements (distro, version, size constraints)?
+7. **Advanced Image Size Optimization**: Does the user want to implement advanced image size optimization techniques, this can add complexity, selectable options (dpkg/apt optimization, pip/npm cache disabling)?
+
+**Do not proceed with implementation until these questions are answered.** This prevents rework and ensures the Dockerfile meets actual requirements.
+
 ## Core Principles of Containerization
 
 ### Immutability
@@ -66,7 +80,7 @@ You are an expert in containerization with deep knowledge of Docker best practic
 
 ### Bash script best practices
 
-- **Principle:** When using shell scripts in RUN instructions or entrypoints, use `fc-optimize-shell-scripts` skill.
+- **Principle:** When using shell scripts in RUN instructions or entrypoints, MANDATORY: Read and apply `fc-optimize-shell-scripts` skill.
 
 ### Multi-Stage Builds (The Golden Rule)
 
@@ -77,7 +91,7 @@ You are an expert in containerization with deep knowledge of Docker best practic
   - Add stage comment headers to clearly separate stages
   - Use `COPY --from=<stage>` to transfer only necessary artifacts
   - Put longest/heaviest builds first, frequently changing content last (optimize caching)
-  - Include stage diagram at Dockerfile beginning showing inheritance/dependencies
+  - **SHOULD** Include stage diagram at Dockerfile beginning showing inheritance/dependencies
   - Use different base images for build vs runtime when appropriate
   - Optimize by removing unnecessary stages or adding intermediate caching stages
 - **Benefit:** Significantly reduces final image size and attack surface.
@@ -85,22 +99,22 @@ You are an expert in containerization with deep knowledge of Docker best practic
 
 #### Development stage
 
-Use `askQuestions` tool to ask if the user wants to include a development stage in their Dockerfile for local development, and provide guidance if they choose to do so.
+- **Purpose:** For local development with hot-reloading and dev dependencies.
+- **Implementation:** Include dev tools, mount source code as volume for hot reload.
 
 #### Test stage
 
-Use `askQuestions` tool to ask if the user wants to include a test stage in their Dockerfile for running tests during the build process, and provide guidance if they choose to do so.
-
+- **Purpose:** Run tests during build to catch issues early.
 - **Implementation:**
   - Run unit tests, integration tests, or static analysis during build
   - Generate test reports/artifacts for debugging or CI/CD
   - Use caching to speed up test runs in dev; always run in CI/CD
-  - If `.pre-commit-config.yaml` exists, run `pre-commit run --all-files` to enforce quality checks
+  - If `.pre-commit-config.yaml` exists, run `pre-commit run --all-files` to enforce quality checks and ensure pre-commit is available in test stage
+  - Create test marker file to create build dependency without inheriting test layers
 
 #### Security scanning stage
 
-Use `askQuestions` tool to ask if the user wants to include a security scanning stage in their Dockerfile for scanning the image for vulnerabilities during the build process, and provide guidance if they choose to do so.
-
+- **Purpose:** Scan images for vulnerabilities as part of build process.
 - **Implementation:**
   - Integrate security scanning tools (Trivy, Clair, Snyk) into build
   - Configure build to fail on critical vulnerabilities
@@ -138,6 +152,17 @@ Use `askQuestions` tool to ask if the user wants to include a security scanning 
   - Use heredoc (`<<EOF`) to group commands with proper error handling
   - List each package on separate line, alphabetically ordered
 - **[Example (Advanced Layer Optimization)](assets/advanced-layer-optimization.dockerfile)**
+
+### Heredoc Best Practices
+
+- **Principle:** Use heredoc syntax (`<<EOF`) for multi-line RUN instructions to improve readability, maintainability, and proper error handling.
+- **Benefit:** Commands execute in a single layer, proper error propagation with SHELL settings, and better code organization.
+- **Examples:**
+  - **[Apt-Get Package Installation](assets/heredoc-apt-get.dockerfile)** - System packages with version pinning
+  - **[Python Pip Installation](assets/heredoc-pip.dockerfile)** - Python packages without cache
+  - **[Node.js NPM Installation](assets/heredoc-npm.dockerfile)** - JavaScript packages with cleanup
+  - **[Multi-Command Build](assets/heredoc-multi-command-build.dockerfile)** - Download, compile, install pattern
+  - **[Configuration File Creation](assets/heredoc-file-creation.dockerfile)** - Creating files with heredoc
 
 ### Advanced Image Size Optimization
 
@@ -242,6 +267,16 @@ RUN find /app
   - Add comments for important environment variables to explain their purpose and usage
 - **[Example (Environment Variable Best Practices)](assets/environment-variable-best-practices.dockerfile)**
 
+### Environment Variables Documentation Template
+
+- **Principle:** Every environment variable should be documented with its purpose, default value, and expected format.
+- **[Template with Examples (Environment Variables Documentation)](assets/environment-variables-template.dockerfile)**
+- **Format for each variable:**
+  - Description: Purpose and usage
+  - Default: Default value if not overridden
+  - Example: Sample values for different scenarios
+  - Required: Whether the variable must be set
+
 ### Package Management Best Practices
 
 - **Principle:** Install packages with strict version control, proper ordering, and comprehensive security updates.
@@ -288,8 +323,6 @@ RUN find /app
 - **[Example (Security Scanning in CI)](assets/security-scanning-ci.yaml)**
 
 ### Image Signing & Verification
-
-Use `askQuestions` tool to ask if the user wants to implement image signing and verification in their pipeline, and provide guidance if they choose to do so.
 
 - **Principle:** Ensure images haven't been tampered with and come from trusted sources.
 - **Implementation:**
@@ -374,46 +407,71 @@ cosign verify -key cosign.pub myregistry.com/myapp:v1.0.0
   - Optionally copy test results to production stage for validation
 - **[Example Multi-Stage Build with Testing](assets/maximum-space-optimization.dockerfile)**
 
+## Complete Dockerfile Template
+
+This template incorporates ALL best practices from this skill. Use as a starting point and customize based on your application requirements.
+
+- **[Complete Dockerfile Template (All Best Practices)](assets/complete-dockerfile-template.dockerfile)**
+
+### Template Customization Guide
+
+1. **Customize Base Image**: Replace `ubuntu:22.04` with your preferred base (e.g., `node:18-slim`, `python:3.11-slim`)
+2. **Adjust Version Pins**: Update package versions to match your requirements
+3. **Modify Build Process**: Replace `npm` commands with your build tool (pip, go build, maven, etc.)
+4. **Remove Unused Stages**: Delete development, test, or security-scan stages if not needed (but ask questions first)
+5. **Add Language-Specific Optimizations**: Apply Python, Node.js, or other language-specific best practices from this skill
+6. **Update Environment Variables**: Add or remove variables based on your application needs
+7. **Configure Health Check**: Adjust health check endpoint and timing for your application
+
 ## Dockerfile Review Checklist
 
-- [ ] **CRITICAL:** Is SHELL instruction present with `-o pipefail -o errexit -o xtrace` options?
-- [ ] **CRITICAL:** Are multi-line `RUN` commands using Heredoc (`<<EOF`) for better readability and maintainability?
-- [ ] **CRITICAL:** Is `apt-get upgrade -y` included after `apt-get update`?
-- [ ] **CRITICAL:** Are all packages specified with version wildcards (e.g., `'2.4.*'`)?
-- [ ] **CRITICAL:** Is base image version pinned (no `latest` tag)?
-- [ ] **CRITICAL:** Have you run `docker build --no-cache .` to verify the build process and caching behavior?
-- [ ] **CRITICAL:** ensure subsequent RUN instructions are merged into a single layer with proper cleanup to optimize image size.
-- [ ] **CRITICAL:** is `.env` file included in `.gitignore` ?
-- [ ] **CRITICAL:** Is dependency files (e.g., `package.json`, `requirements.txt`) copied before source code for better caching?
-- [ ] **CRITICAL:** Is stages diagram included at the beginning of the Dockerfile to illustrate stage dependencies?
-- [ ] **CRITICAL:** Is `SHELL` instruction included after each `FROM` to ensure proper error handling and debugging?
-- [ ] Is `ARG DEBIAN_FRONTEND=noninteractive` set before apt-get operations?
-- [ ] Are packages listed alphabetically, one per line?
-- [ ] Is a multi-stage build used if applicable (compiled languages, heavy build tools)?
-- [ ] Is a minimal, specific base image used (e.g., `slim`, versioned)?
-- [ ] Are layers optimized (combining `RUN` commands, cleanup in same layer)?
-- [ ] Is a `.dockerignore` file present and comprehensive?
-- [ ] Are `COPY` instructions specific and minimal?
-- [ ] Is dpkg/apt configuration added for doc/cache exclusion (for maximum optimization)?
-- [ ] Is comprehensive cleanup included (`apt-get autoremove`, remove lists, tmp, docs)?
-- [ ] Is a non-root `USER` defined for the running application?
-- [ ] Is the `EXPOSE` instruction used for documentation?
-- [ ] Is `CMD` and/or `ENTRYPOINT` used correctly?
-- [ ] Are sensitive configurations handled via environment variables (not hardcoded)?
-- [ ] Is a `HEALTHCHECK` instruction defined?
-- [ ] Are there any secrets or sensitive data accidentally included in image layers?
-- [ ] Are there static analysis tools (Hadolint, Trivy) integrated into CI?
-- [ ] Has `hadolint` been run on the Dockerfile?
+### Critical Items (Must Have)
+
+- [ ] **SHELL Configuration**: Is SHELL instruction present after each `FROM` with `-o pipefail -o errexit -o xtrace` options?
+- [ ] **Heredoc Usage**: Are multi-line `RUN` commands using Heredoc (`<<EOF`) for better readability and maintainability?
+- [ ] **Security Updates**: Is `apt-get upgrade -y` included after `apt-get update` (with immutable image comment)?
+- [ ] **Version Pinning**: Are all packages specified with version wildcards (e.g., `'2.4.*'`)?
+- [ ] **Base Image Version**: Is base image version pinned (no `latest` tag)?
+- [ ] **Build Verification**: Have you run `docker build --no-cache .` to verify the build process?
+- [ ] **Layer Optimization**: Are RUN instructions merged into single layers with proper cleanup?
+- [ ] **Git Ignore**: Is `.env` file included in `.gitignore`?
+- [ ] **Dependency Caching**: Are dependency files (e.g., `package.json`, `requirements.txt`) copied before source code?
+- [ ] **Stage Diagram**: Is stages diagram included at the beginning of multi-stage Dockerfiles?
+- [ ] **Non-Root User**: Is a non-root `USER` defined with proper permissions for the running application?
+- [ ] **No Secrets**: Are there NO secrets or sensitive data in image layers?
+- [ ] **Review**:** at the end of the checklist, review the all the modified files and check if any of the best practices from this skill can be applied. If any of the best practices can be applied, add it to the checklist and apply it before marking the checklist as complete.
+
+### Important Items (Should Have)
+
+- [ ] **DEBIAN_FRONTEND**: Is `ARG DEBIAN_FRONTEND=noninteractive` set before apt-get operations?
+- [ ] **Package Ordering**: Are packages listed alphabetically, one per line?
+- [ ] **Multi-Stage Build**: Is multi-stage build used if applicable (compiled languages, heavy build tools)?
+- [ ] **Minimal Base Image**: Is a minimal, specific base image used (e.g., `slim`, versioned)?
+- [ ] **Docker Ignore**: Is a `.dockerignore` file present and comprehensive?
+- [ ] **COPY Instructions**: Are `COPY` instructions specific and minimal?
+- [ ] **Comprehensive Cleanup**: Is cleanup included (`apt-get autoremove`, remove lists, tmp, docs)?
+- [ ] **Port Documentation**: Is the `EXPOSE` instruction used for documentation?
+- [ ] **CMD/ENTRYPOINT**: Is `CMD` and/or `ENTRYPOINT` used correctly (exec form)?
+- [ ] **Environment Variables**: Are all environment variables documented with description, default, and required status?
+- [ ] **External Config**: Are sensitive configurations handled via environment variables (not hardcoded)?
+- [ ] **Health Check**: Is a `HEALTHCHECK` instruction defined for orchestration?
+- [ ] **Test Marker**: Does production stage copy test marker file to ensure tests passed?
+
+### Quality Assurance
+
+- [ ] **Security Scanning**: Are security scanning tools (Trivy, Snyk) integrated into CI?
+- [ ] **Shell Scripts**: Have shell scripts been optimized using `fc-optimize-shell-scripts` skill?
 
 ## Validation and Linting
 
 - **Principle:** Validate Dockerfiles for syntax and best practices before building images.
-- **Implementation:**
-  - Use `hadolint` for Dockerfile linting and best practice checks
-  - Use `docker build --no-cache` to verify the build process and caching behavior
-  - Analyze image size with `docker images` and `docker history` to identify optimization opportunities
-  - Integrate validation and linting into CI/CD pipelines for automated checks
-  - Continuous improvement from errors found during builds and linting, indicate in the report what needs to be added to `fc-optimize-dockerfile` skill next time.
+- [ ] **YOU MUST RUN** `hadolint` for Dockerfile linting and best practice checks, Fix critical issues before reporting completion
+- [ ] **YOU MUST RUN** `docker build --no-cache` to verify the build process and caching behavior
+- [ ] **YOU MUST RUN** Analyze image size with `docker images` and `docker history` to identify optimization opportunities
+- [ ] **IMPORTANT** Continuous improvement from errors found during builds and linting, indicate in the report what needs to be added to `fc-optimize-dockerfile` skill next time.
+- [ ] Wait for build to complete, Document any warnings or errors
+- [ ] Integrate validation and linting into CI/CD pipelines for automated checks
+- [ ] Report results in optimization report
 
 ## Troubleshooting Docker Builds & Runtime
 
@@ -460,10 +518,12 @@ highly efficient, secure, and portable applications.
 **Key Differentiators in This Skill:**
 
 - Mandatory use of SHELL instruction with xtrace for debugging
+- Heredoc syntax for all multi-line RUN commands
 - No usage of `&&` for better error handling
 - Security-first approach with `apt-get upgrade -y`
 - Strict version pinning with wildcards for reproducibility
-- Advanced space optimization with dpkg/apt configuration
+- Comprehensive environment variable documentation
+- Complete template with all stages (development, test, security-scan, production)
 
-Remember to continuously evaluate and refine your container strategies as your application evolves,
-and don't hesitate to use `askQuestions` tool when user requirements need clarification.
+Continuously evaluate and refine the container strategies as the application evolves.
+Always ask clarifying questions upfront (see "MANDATORY: Ask Questions First" section) to ensure the Dockerfile meets actual requirements.
