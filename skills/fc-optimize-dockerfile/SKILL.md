@@ -85,11 +85,11 @@ You are an expert in containerization with deep knowledge of Docker best practic
 
 #### Development stage
 
-Use `ask-questions` tool to ask if the user wants to include a development stage in their Dockerfile for local development, and provide guidance if they choose to do so.
+Use `askQuestions` tool to ask if the user wants to include a development stage in their Dockerfile for local development, and provide guidance if they choose to do so.
 
 #### Test stage
 
-Use `ask-questions` tool to ask if the user wants to include a test stage in their Dockerfile for running tests during the build process, and provide guidance if they choose to do so.
+Use `askQuestions` tool to ask if the user wants to include a test stage in their Dockerfile for running tests during the build process, and provide guidance if they choose to do so.
 
 - **Implementation:**
   - Run unit tests, integration tests, or static analysis during build
@@ -99,7 +99,7 @@ Use `ask-questions` tool to ask if the user wants to include a test stage in the
 
 #### Security scanning stage
 
-Use `ask-questions` tool to ask if the user wants to include a security scanning stage in their Dockerfile for scanning the image for vulnerabilities during the build process, and provide guidance if they choose to do so.
+Use `askQuestions` tool to ask if the user wants to include a security scanning stage in their Dockerfile for scanning the image for vulnerabilities during the build process, and provide guidance if they choose to do so.
 
 - **Implementation:**
   - Integrate security scanning tools (Trivy, Clair, Snyk) into build
@@ -239,6 +239,7 @@ RUN find /app
   - Use `ARG` for build-time variables; `ENV` for runtime configuration
   - Validate required environment variables at startup to fail fast
   - Never hardcode secrets in Dockerfile environment variables
+  - Add comments for important environment variables to explain their purpose and usage
 - **[Example (Environment Variable Best Practices)](assets/environment-variable-best-practices.dockerfile)**
 
 ### Package Management Best Practices
@@ -288,7 +289,7 @@ RUN find /app
 
 ### Image Signing & Verification
 
-Use `ask-questions` tool to ask if the user wants to implement image signing and verification in their pipeline, and provide guidance if they choose to do so.
+Use `askQuestions` tool to ask if the user wants to implement image signing and verification in their pipeline, and provide guidance if they choose to do so.
 
 - **Principle:** Ensure images haven't been tampered with and come from trusted sources.
 - **Implementation:**
@@ -319,6 +320,18 @@ cosign verify -key cosign.pub myregistry.com/myapp:v1.0.0
   - AppArmor Profile: `docker run --security-opt apparmor=custom-profile myapp:latest`
   - Capabilities Drop: `docker run --cap-drop=ALL --security-opt=no-new-privileges myapp`
 - **Pro Tip:** Defense in depth is key. Use multiple layers of security controls.
+
+### Optimize COPY logic
+
+- **Principle:** Be mindful of copying files in layers to maximize caching and minimize image size. Avoid copying unnecessary files or secrets.
+- **Implementation:**
+  - Use specific paths in `COPY` to avoid copying entire directories when not needed
+  - Leverage `.dockerignore` to exclude files that shouldn't be copied
+  - Avoid copying secrets or sensitive files; use build arguments or secrets management instead
+  - Copy dependency files (e.g., `package.json`, `requirements.txt`) before source code for better caching
+  - Install in separated layers prod, tests, dev dependencies, and copy only necessary files for each layer/stage
+  - Use multi-stage builds to copy only necessary artifacts to final image
+- **Anti-pattern:** `COPY . .` without a proper `.dockerignore` can lead to large images and security risks if sensitive files are included.
 
 ### No Sensitive Data in Image Layers
 
@@ -371,6 +384,9 @@ cosign verify -key cosign.pub myregistry.com/myapp:v1.0.0
 - [ ] **CRITICAL:** Have you run `docker build --no-cache .` to verify the build process and caching behavior?
 - [ ] **CRITICAL:** ensure subsequent RUN instructions are merged into a single layer with proper cleanup to optimize image size.
 - [ ] **CRITICAL:** is `.env` file included in `.gitignore` ?
+- [ ] **CRITICAL:** Is dependency files (e.g., `package.json`, `requirements.txt`) copied before source code for better caching?
+- [ ] **CRITICAL:** Is stages diagram included at the beginning of the Dockerfile to illustrate stage dependencies?
+- [ ] **CRITICAL:** Is `SHELL` instruction included after each `FROM` to ensure proper error handling and debugging?
 - [ ] Is `ARG DEBIAN_FRONTEND=noninteractive` set before apt-get operations?
 - [ ] Are packages listed alphabetically, one per line?
 - [ ] Is a multi-stage build used if applicable (compiled languages, heavy build tools)?
@@ -450,4 +466,4 @@ highly efficient, secure, and portable applications.
 - Advanced space optimization with dpkg/apt configuration
 
 Remember to continuously evaluate and refine your container strategies as your application evolves,
-and don't hesitate to use `ask-questions` tool when user requirements need clarification.
+and don't hesitate to use `askQuestions` tool when user requirements need clarification.
