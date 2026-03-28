@@ -109,7 +109,9 @@ You are an expert in containerization with deep knowledge of Docker best practic
   - Run unit tests, integration tests, or static analysis during build
   - Generate test reports/artifacts for debugging or CI/CD
   - Use caching to speed up test runs in dev; always run in CI/CD
-  - If `.pre-commit-config.yaml` exists, run `pre-commit run --all-files` to enforce quality checks and ensure pre-commit is available in test stage
+  - **SHOULD**: Install pre-commit in test stage to run pre-commit hooks during build if `.pre-commit-config.yaml` exists.
+  - **SHOULD** If `.pre-commit-config.yaml` exists, run `pre-commit run --all-files` to enforce quality checks and ensure pre-commit is available in test stage
+  - **NEVER** use `pre-commit install`
   - Create test marker file to create build dependency without inheriting test layers
 
 #### Security scanning stage
@@ -252,6 +254,7 @@ RUN find /app
   - For simple execution, `CMD ["executable", "param1"]` is sufficient
   - Prefer exec form (`["command", "arg1"]`) over shell form for proper signal handling
   - Consider shell scripts as entrypoints for complex startup logic
+  - **ALWAYS** if entrypoint needed, create `entrypoint.sh` as a separated file, copy it in the image and use it as entrypoint, avoid inline shell scripts in `ENTRYPOINT`.
 - **Pro Tip:** Exec form ensures application receives signals properly for graceful shutdowns.
 - **[Example Proper entrypoint.sh](assets/entrypoint.sh)**
 
@@ -287,6 +290,7 @@ RUN find /app
   - List packages alphabetically, one per line, with proper quoting
   - Use `apt-get install -y -q --no-install-recommends` for minimal installations
   - Include comprehensive cleanup in same RUN command: `apt-get autoremove -y`, `apt-get clean`, remove cache dirs
+  - **CRITICAL**: cleaning should be in the same RUN command to avoid creating extra layers with cached files
   - Note: Some packages use epoch notation (e.g., `redis-tools='5:5.*'`)
 - **Benefit:** Reproducible builds with security updates, smaller size, better maintainability.
 - **[Example (Complete Package Management)](assets/complete-package-management.dockerfile)**
@@ -365,6 +369,7 @@ cosign verify -key cosign.pub myregistry.com/myapp:v1.0.0
   - Install in separated layers prod, tests, dev dependencies, and copy only necessary files for each layer/stage
   - Use multi-stage builds to copy only necessary artifacts to final image
 - **Anti-pattern:** `COPY . .` without a proper `.dockerignore` can lead to large images and security risks if sensitive files are included.
+- **Anti-pattern:** `COPY requirements1.txt requirements2.txt` instead of separately copying and layer to install for each one.
 
 ### No Sensitive Data in Image Layers
 
