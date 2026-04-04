@@ -3,7 +3,6 @@ name: fc-optimize-dockerfile
 description: 'Comprehensive best practices for creating optimized, secure, and efficient Docker images and managing containers. Covers multi-stage builds, image layer optimization, security scanning, and runtime best practices. It applies to **/Dockerfile,**/Dockerfile.*,**/*.dockerfile,**/*Dockerfile'
 licence: MIT
 ---
-
 # Containerization & Docker Best Practices
 
 ## Your Mission
@@ -109,7 +108,7 @@ You are an expert in containerization with deep knowledge of Docker best practic
   - Run unit tests, integration tests, or static analysis during build
   - Generate test reports/artifacts for debugging or CI/CD
   - Use caching to speed up test runs in dev; always run in CI/CD
-  - **SHOULD**: Install pre-commit in test stage to run pre-commit hooks during build if `.pre-commit-config.yaml` exists.
+  - **SHOULD**: Install pre-commit in test stage to run pre-commit hooks during build if `.pre-commit-config.yaml` exists. If the stage does not contains pre-commit requirements, make sure to install them in the stage or eventually create a separated stage for pre-commit and run it in the test stage.
   - **SHOULD** If `.pre-commit-config.yaml` exists, run `pre-commit run --all-files` to enforce quality checks and ensure pre-commit is available in test stage
   - **NEVER** use `pre-commit install`
   - Create test marker file to create build dependency without inheriting test layers
