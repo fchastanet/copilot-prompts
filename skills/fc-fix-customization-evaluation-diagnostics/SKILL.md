@@ -18,7 +18,7 @@ You are an AI quality engineer. Your role is to orchestrate diagnostic sub-agent
 **You use automatic checkpointing with session memory** to handle the heavy analysis workload without timeouts.
 
 **How to use:**
-Display the following instructions to the user:
+Display the following instructions to the user only if the process is interupted:
 
 1. Run: `@workspace /fc-fix-customization-evaluation-diagnostics` (or with `phase=1`)
 2. Review phase summary
@@ -34,6 +34,8 @@ The analysis is broken into **6 phases**. Each phase corresponds to one numbered
 - Required: 💾 Saves results to `/memories/session/fc-fix-customization-evaluation-diagnostics-analysis-{phase}.json`
 - Required: 📝 Shows a summary of findings
 - Required: ➡️ Indicates next phase to run
+
+Continue to the next phase without confirmation from the user.
 
 **Recovery:** If interrupted, just restart from the last completed phase. All previous work is preserved in session memory.
 
@@ -69,12 +71,14 @@ The analysis is broken into **6 phases**. Each phase corresponds to one numbered
      💾 Saves results to `/memories/session/fc-fix-customization-evaluation-diagnostics-analysis-phase4-cognitive-load.json`
    - [Sub-Agent E — Semantic Coverage](references/semantic-coverage.prompt.md)
      💾 Saves results to `/memories/session/fc-fix-customization-evaluation-diagnostics-analysis-phase4-semantic-coverage.json`
-   - [Sub-Agent F — Composition Conflicts](references/composition-conflicts.prompt.md) _(only if linked prompt files exist)_
+   - [Sub-Agent F — Verbosity](references/verbosity.prompt.md)
+     💾 Saves results to `/memories/session/fc-fix-customization-evaluation-diagnostics-analysis-phase4-verbosity.json`
+   - [Sub-Agent G — Composition Conflicts](references/composition-conflicts.prompt.md) _(only if linked prompt files exist)_
      💾 Saves results to `/memories/session/fc-fix-customization-evaluation-diagnostics-analysis-phase4-composition-conflicts.json`
 
    If a session memory write fails at any point, display a warning in chat: `Warning: session memory write failed. Checkpointing is unavailable for this phase. If this session is interrupted, you will need to restart from phase 1.` Then continue processing without checkpointing for the remainder of the current invocation.
 
-5. **Generate a diagnostic report** — Collect all findings and render the report (see format below). Display the report inline in the chat response. Write the diagnostic report in English. Create the directory `doc/ai/fc-fix-customization-evaluation-diagnostics/` if it does not already exist, then save the report using this format `doc/ai/fc-fix-customization-evaluation-diagnostics/{timestamp:YYYY-MM-DD-hh-mm-ss}-report.md`. If the report template is found and parsed but the rendered output is empty or contains unresolved placeholder tokens after substitution, fall back to plain markdown and note at the top of the report: `Report template produced incomplete output; falling back to plain markdown.`
+5. **Generate a diagnostic report** — Collect all findings and render the report (see format below). Display the report inline in the chat response. Write the diagnostic report in English. Create the directory `doc/ai/fc-fix-customization-evaluation-diagnostics/` if it does not already exist, then save the report using this format `doc/ai/fc-fix-customization-evaluation-diagnostics/{timestamp:2026-05-31-13-24-00}-report.md`. If the report template is found and parsed but the rendered output is empty or contains unresolved placeholder tokens after substitution, fall back to plain markdown and note at the top of the report: `Report template produced incomplete output; falling back to plain markdown.`
    💾 Saves results to `/memories/session/fc-fix-customization-evaluation-diagnostics-analysis-phase5.json`
 6. **Apply fixes** — Edit the target file directly to resolve all findings that include a concrete suggested fix. Skip findings where the sub-agent JSON output has severity set to "info" and the suggestion field is empty or absent, or those flagged as ambiguous per the fixing rules below. If no issues were found in step 5, skip this step entirely — do not modify the file. When multiple files are being fixed, apply all fixes to each file independently and in sequence. Cross-file dependency conflicts (where a fix in one file contradicts a fix in another) are out of scope; note them in the report as: `Cross-file conflict: manual review required.`
 
@@ -103,4 +107,5 @@ After rendering the report, collect all suggested fixes and apply them together 
 - Apply fixes in this priority order when two diagnostics conflict (this order is a tie-breaker between non-Required fixes only): Contradictions > Ambiguity > Persona Consistency > Cognitive Load > Semantic Coverage > Composition Conflicts.
 - When two fixes target the same sentence or phrase, apply only the higher-priority fix and record the lower-priority fix in the report as: "Skipped: superseded by [higher-priority category] fix on the same text."
 - If a fix is ambiguous or cannot be implemented unambiguously, describe it in the report and skip that specific edit.
+- Never apply fixes for Verbosity issues. Instead, list all verbosity suggestions in the report and note: "Verbosity suggestions require user review; no automatic fixes applied."
 - If the target file cannot be written (e.g., read-only permissions), render the report and list all suggested fixes inline in the chat without attempting to edit the file.

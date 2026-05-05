@@ -2,15 +2,21 @@
 
 ## 1. Overall summary
 
-- Issues: {X issues found across Y categories.}
-  - Contradictions: {A found, B fixed}.
-  - Ambiguities: {C found, D fixed}.
-  - Persona inconsistencies: {E found, F fixed}.
-  - Cognitive load issues: {G found, H fixed}.
-  - Semantic coverage gaps: {I found, J fixed}.
+| Issue Type                 | Count Found     | Count Fixed     | Count Not Fixed   |
+| -------------------------- | --------------- | --------------- | ----------------- |
+| Contradictions             | A               | B               | C                 |
+| Ambiguities                | D               | E               | F                 |
+| Persona Inconsistencies    | G               | H               | I                 |
+| Cognitive Load Issues      | J               | K               | L                 |
+| Semantic Coverage Gaps     | M               | N               | O                 |
+| Verbosity Issues           | P               | Q               | R                 |
+| Composition Conflicts      | S               | T               | U                 |
+| -------------------------- | --------------- | --------------- | ----------------- |
+| Total                      | A+D+G+J+M+P+S   | B+E+H+K+N+Q+T   | C+F+I+L+O+R+U     |
+
 - Overall Cognitive Load complexity: {low|medium|high|very-high}.
 - Overall Semantic coverage: {comprehensive|adequate|limited|minimal}.
-- Overall fixes applied: {Z out of X}.
+- Overall Verbosity: {concise|moderately verbose|verbose|excessively verbose}.
 
 ## 2. Contradictions
 
@@ -88,7 +94,20 @@ _Scenarios or edge cases the prompt does not address._
 - **Suggested fix**: {how to modify the prompt to cover this scenario}
 - **Fix applied**: {yes | **no**}
 
-## 7. Composition Conflicts
+## 7. Verbosity
+
+_Unnecessarily wordy or complex language that could be simplified._
+
+**Issue V#1**
+
+- **Severity**: warning | info
+- **File reference**: `{filename}:lineNumber` as a clickable link to the exact line in the file
+- **Problematic text**: `{exact quoted text}`
+- **Explanation**: {explanation of why this is too verbose for an AI model and how it could be simplified}
+- **Suggested fix**: {how to rewrite this in a simpler way while retaining the original meaning and intent}
+- **Fix applied**: **no**
+
+## 8. Composition Conflicts
 
 _Conflicts between this file and the prompt files it imports._
 
